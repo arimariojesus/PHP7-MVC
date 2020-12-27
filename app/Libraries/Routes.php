@@ -1,8 +1,8 @@
 <?php
 /*
-  * Class Routes
-  * Creates the URL, loads the controllers, méthods and parameters
-  * FORMAT URL : /controller/method/parameters
+ * Class Routes
+ * Creates the URL, loads the controllers, méthods and parameters
+ * FORMAT URL : /controller/method/parameters
 */
 
 class Routes {

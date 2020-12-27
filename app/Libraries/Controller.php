@@ -1,4 +1,8 @@
 <?php
+/*
+ * Controller base
+ * Loads models and views
+*/
 
 class Controller {
 
@@ -7,7 +11,7 @@ class Controller {
     return new $model;
   }
 
-  public function view($view, $dados = []) {
+  public function view($view, $data = []) {
     $file = ('../app/Views/' . $view . '.php');
     if(file_exists($file)) {
       require_once $file;
