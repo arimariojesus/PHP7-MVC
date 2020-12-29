@@ -30,10 +30,12 @@ class Database {
     }
   }
 
+  // executes an SQL statement
   public function query($sql) {
     $this->stmt = $this->dbh->prepare($sql);
   }
 
+  // Binds a value to a parameter of the SQL statement
   public function bind($param, $value, $type = null) {
     if (is_null($type)) {
       switch ($value) {
@@ -55,24 +57,29 @@ class Database {
     }
   }
 
+  // execute prepared statement
   public function exec() {
     return $this->stmt->execute();
   }
 
+  // gets a single record
   public function result() {
     $this->exec();
     return $this->stmt->fetch(PDO::FETCH_OBJ);
   }
 
+  // gets a set records
   public function results() {
     $this->exec();
     return $this->stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
+  // returns the number of rows affected by the last SQL statement
   public function countResults() {
     return $this->stmt->rowCount();
   }
 
+  // returns the last ID entered in the database
   public function lastId() {
     return $this->dbh->lastInsertId();
   }

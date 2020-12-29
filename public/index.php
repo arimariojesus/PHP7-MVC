@@ -1,9 +1,7 @@
 <?php
+date_default_timezone_set('America/Sao_Paulo');
 include("./../app/config.php");
-include("./../app/Libraries/Routes.php");
-include("./../app/Libraries/Controller.php");
-include("./../app/Libraries/Database.php");
-$db = new Database;
+include("./../app/autoload.php");
 
 ?>
 <!DOCTYPE html>
