@@ -17,8 +17,8 @@
             </li>
           </ul>
           <span class="navbar-text">
-            <a class="btn btn-info" href="#" data-tookit="tooltip" title="Não tem uma conta? Cadastre-se">Cadastre-se</a>
-            <a class="btn btn-info" href="#" data-tookit="tooltip" title="Tem uma conta? Faça login">Entrar</a>
+            <a class="btn btn-primary" href="<?= URL ?>/users/register" data-tookit="tooltip" title="Não tem uma conta? Cadastre-se">Cadastre-se</a>
+            <a class="btn btn-primary" href="#" data-tookit="tooltip" title="Tem uma conta? Faça login">Entrar</a>
           </span>
         </div>
       </div>
