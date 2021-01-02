@@ -6,6 +6,10 @@
     <div class="card-body">
       <p class="card-text"><small class="text-muted">Preencha o formulário abaixo para fazer seu cadastro</small></p>
 
+      <div class="<?= !$data['success'] ? 'd-none' : 'alert alert-success' ?>">
+        <?=isset($data['success_message']) ? $data['success_message'] : ''?>
+      </div>
+
       <form action="<?= URL ?>/users/register" name="register" method="POST" class="mt-4">
         <div class="form-group">
           <label for="name" class="form-label">Nome: <sup class="text-danger">*</sup></label>
@@ -15,8 +19,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="email" class="form-label">E-mail: <sup class="text-danger">*</sup></label>
-          <input type="email" name="email" id="email" value="<?=$data['email']?>"class="form-control <?= isset($data['email_error']) ? 'is-invalid' : '' ?>">
+          <label for="email" class="form-label">Email: <sup class="text-danger">*</sup></label>
+          <input type="text" name="email" id="email" value="<?=$data['email']?>"class="form-control <?= isset($data['email_error']) ? 'is-invalid' : '' ?>">
           <div class="invalid-feedback">
             <?= $data['email_error'] ?>
           </div>
