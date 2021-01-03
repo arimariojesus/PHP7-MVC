@@ -6,7 +6,7 @@
     <div class="card-body">
       <p class="card-text"><small class="text-muted">Preencha o formulário abaixo para fazer seu cadastro</small></p>
 
-      <div class="<?= !$data['success'] ? 'd-none' : 'alert alert-success' ?>">
+      <div class="<?= !isset($data['success']) ? 'd-none' : 'alert alert-success' ?>">
         <?=isset($data['success_message']) ? $data['success_message'] : ''?>
       </div>
 

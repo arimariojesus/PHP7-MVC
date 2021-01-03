@@ -11,8 +11,7 @@ class Users extends Controller {
         'name' => trim($form['name']),
         'email' => trim($form['email']),
         'password' => trim($form['password']),
-        'confirm_password' => trim($form['confirm_password']),
-        'success' => false,
+        'confirm_password' => trim($form['confirm_password'])
       ];
 
       if(in_array('', $form)) {
@@ -41,6 +40,7 @@ class Users extends Controller {
         }else if($form['password'] != $form['confirm_password']) {
           $data['confirm_password_error'] = 'As senhas não coincidem';
         }else {
+          $data['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
           $data['success'] = true;
           $data['success_message'] = 'Cadastro realizado com sucesso';
         }
