@@ -2,6 +2,11 @@
 
 class Users extends Controller {
 
+  public function __construct()
+  {
+    $this->modelUser = $this->model('User');
+  }
+
   public function register() {
 
     $form = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -41,8 +46,13 @@ class Users extends Controller {
           $data['confirm_password_error'] = 'As senhas não coincidem';
         }else {
           $data['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
-          $data['success'] = true;
-          $data['success_message'] = 'Cadastro realizado com sucesso';
+
+          if($this->modelUser->register($data)) {
+            $data['success'] = true;
+            $data['success_message'] = 'Cadastro realizado com sucesso';
+          }else {
+            die("Erro ao armazenar usuário no banco de dados");
+          }
         }
       }
     }else {
