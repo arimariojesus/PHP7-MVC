@@ -64,6 +64,11 @@ class Users extends Controller {
         'password' => '',
         'confirm_password' => '',
         'name_error' => '',
+        'email_error' => '',
+        'password_error' => '',
+        'confirm_password_error' => '',
+        'success' => null,
+        'success_message' => '',
       ];
     }
 

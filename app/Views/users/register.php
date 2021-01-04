@@ -6,8 +6,8 @@
     <div class="card-body">
       <p class="card-text"><small class="text-muted">Preencha o formulário abaixo para fazer seu cadastro</small></p>
 
-      <div class="<?= !isset($data['success']) ? 'd-none' : 'alert alert-success' ?>">
-        <?=isset($data['success_message']) ? $data['success_message'] : ''?>
+      <div class="<?= empty($data['success']) ? 'd-none' : 'alert alert-success' ?>">
+        <?=!empty($data['success_message']) ? $data['success_message'] : ''?>
       </div>
 
       <form action="<?= URL ?>/users/register" name="register" method="POST" class="mt-4">
