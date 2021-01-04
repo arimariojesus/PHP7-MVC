@@ -1,10 +1,54 @@
 <?php
 
 class Users extends Controller {
+  private $modelUser;
 
   public function __construct()
   {
     $this->modelUser = $this->model('User');
+  }
+  
+  public function login() {
+    $form = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    if(isset($form)) {
+      $data = [
+        'email' => trim($form['email']),
+        'password' => trim($form['password']),
+      ];
+
+      if(in_array('', $form)) {
+        if(empty($form['email'])) {
+          $data['email_error'] = 'E-mail é obrigatório';
+        }
+  
+        if(empty($form['password'])) {
+          $data['password_error'] = 'Informe a sua senha';
+        }
+      }else {
+        if(Validator::checkEmail($form['email'])) {
+          $data['email_error'] = 'O email informado é inválido';
+        }else {
+          if($this->modelUser->login($data)) {
+            echo "Pode fazer login<br>";
+          }else {
+            $data['fail'] = true;
+            $data['fail_message'] = 'E-mail ou senha inválidos<br>';
+          }
+        }
+      }
+    }else {
+      $data = [
+        'email' => '',
+        'password' => '',
+        'email_error' => '',
+        'password_error' => '',
+        'fail' => false,
+        'fail_message' => '',
+      ];
+    }
+
+    $this->view('users/login', $data);
   }
 
   public function register() {
@@ -67,7 +111,7 @@ class Users extends Controller {
         'email_error' => '',
         'password_error' => '',
         'confirm_password_error' => '',
-        'success' => null,
+        'success' => false,
         'success_message' => '',
       ];
     }

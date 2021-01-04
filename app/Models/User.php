@@ -21,6 +21,26 @@ class User {
     }
   }
 
+  public function login($data) {
+    $email = $data['email'];
+    $password = $data['password'];
+
+    $this->db->query("SELECT email, password FROM users WHERE email = :email");
+    $this->db->bind(':email', $email);
+
+    if($this->db->result()) {
+      $result = $this->db->result();
+
+      if(password_verify($password, $result->password)) {
+        return $result;
+      }else {
+        return false;
+      }
+    }else {
+      return false;
+    }
+  }
+
   public function checkEmail($email) {
     $this->db->query("SELECT email FROM users WHERE email = :email");
     $this->db->bind(':email', $email);
