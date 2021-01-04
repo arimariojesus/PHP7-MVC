@@ -42,6 +42,8 @@ class Users extends Controller {
           $data['password_error'] = 'A senha deve ter entre 6 e 20 caracteres';
         }else if(Validator::checkEmail($form['email'])) {
           $data['email_error'] = 'O email informado é inválido';
+        }else if($this->modelUser->checkEmail($data['email'])) {
+          $data['email_error'] = 'E-mail já cadastrado';
         }else if($form['password'] != $form['confirm_password']) {
           $data['confirm_password_error'] = 'As senhas não coincidem';
         }else {
