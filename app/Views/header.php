@@ -16,10 +16,17 @@
               <a class="nav-link" data-toolkit="tooltip" title="Sobre nós" href="<?=URL?>/pages/about">Sobre nós</a>
             </li>
           </ul>
-          <span class="navbar-text">
-            <a class="btn btn-primary" href="<?= URL ?>/users/register" data-tookit="tooltip" title="Não tem uma conta? Cadastre-se">Cadastre-se</a>
-            <a class="btn btn-primary" href="<?= URL ?>/users/login" data-tookit="tooltip" title="Tem uma conta? Faça login">Entrar</a>
-          </span>
+          <?php if(isset($_SESSION['user_id'])): ?>
+            <span class="navbar-text">
+              <span>Olá <?= $_SESSION['user_name'] ?>, seja bem vindo!</span>
+              <a class="btn btn-sm btn-danger ms-2" href="<?= URL ?>/users/exit">Sair</a>
+            </span>
+          <?php else: ?>
+            <span class="navbar-text">
+              <a class="btn btn-primary" href="<?= URL ?>/users/register" data-tookit="tooltip" title="Não tem uma conta? Cadastre-se">Cadastre-se</a>
+              <a class="btn btn-primary" href="<?= URL ?>/users/login" data-tookit="tooltip" title="Tem uma conta? Faça login">Entrar</a>
+            </span>
+          <?php endif; ?>
         </div>
       </div>
     </nav>

@@ -7,49 +7,6 @@ class Users extends Controller {
   {
     $this->modelUser = $this->model('User');
   }
-  
-  public function login() {
-    $form = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-    if(isset($form)) {
-      $data = [
-        'email' => trim($form['email']),
-        'password' => trim($form['password']),
-      ];
-
-      if(in_array('', $form)) {
-        if(empty($form['email'])) {
-          $data['email_error'] = 'E-mail é obrigatório';
-        }
-  
-        if(empty($form['password'])) {
-          $data['password_error'] = 'Informe a sua senha';
-        }
-      }else {
-        if(Validator::checkEmail($form['email'])) {
-          $data['email_error'] = 'O email informado é inválido';
-        }else {
-          if($this->modelUser->login($data)) {
-            echo "Pode fazer login<br>";
-          }else {
-            $data['fail'] = true;
-            $data['fail_message'] = 'E-mail ou senha inválidos<br>';
-          }
-        }
-      }
-    }else {
-      $data = [
-        'email' => '',
-        'password' => '',
-        'email_error' => '',
-        'password_error' => '',
-        'fail' => false,
-        'fail_message' => '',
-      ];
-    }
-
-    $this->view('users/login', $data);
-  }
 
   public function register() {
 
@@ -117,6 +74,69 @@ class Users extends Controller {
     }
 
     $this->view('users/register', $data);
+  }
+  
+  public function login() {
+    $form = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    if(isset($form)) {
+      $data = [
+        'email' => trim($form['email']),
+        'password' => trim($form['password']),
+      ];
+
+      if(in_array('', $form)) {
+        if(empty($form['email'])) {
+          $data['email_error'] = 'E-mail é obrigatório';
+        }
+  
+        if(empty($form['password'])) {
+          $data['password_error'] = 'Informe a sua senha';
+        }
+      }else {
+        if(Validator::checkEmail($form['email'])) {
+          $data['email_error'] = 'O email informado é inválido';
+        }else {
+
+          $user = $this->modelUser->login($data);
+
+          if($user) {
+            $this->createSessionUser($user);
+            header('Location: '.URL);
+          }else {
+            $data['fail'] = true;
+            $data['fail_message'] = 'E-mail ou senha inválidos<br>';
+          }
+        }
+      }
+    }else {
+      $data = [
+        'email' => '',
+        'password' => '',
+        'email_error' => '',
+        'password_error' => '',
+        'fail' => false,
+        'fail_message' => '',
+      ];
+    }
+
+    $this->view('users/login', $data);
+  }
+
+  private function createSessionUser($user) {
+    $_SESSION['user_id'] = $user->id;
+    $_SESSION['user_name'] = $user->name;
+    $_SESSION['user_email'] = $user->email;
+  }
+
+  public function exit() {
+    unset($_SESSION['user_id']);
+    unset($_SESSION['user_name']);
+    unset($_SESSION['user_email']);
+    
+    session_destroy();
+
+    header('Location: '.URL.'/users/login');
   }
 }
 

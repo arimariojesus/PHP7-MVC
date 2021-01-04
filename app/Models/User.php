@@ -25,7 +25,7 @@ class User {
     $email = $data['email'];
     $password = $data['password'];
 
-    $this->db->query("SELECT email, password FROM users WHERE email = :email");
+    $this->db->query("SELECT * FROM users WHERE email = :email");
     $this->db->bind(':email', $email);
 
     if($this->db->result()) {
