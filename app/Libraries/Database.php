@@ -52,9 +52,9 @@ class Database {
           $type = PDO::PARAM_STR;
         break;
       }
-
-      $this->stmt->bindValue($param, $value, $type);
     }
+
+    $this->stmt->bindValue($param, $value, $type);
   }
 
   // execute prepared statement
