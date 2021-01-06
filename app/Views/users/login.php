@@ -13,11 +13,17 @@
       <form action="<?= URL ?>/users/login" name="login" method="POST" class="mt-4">
         <div class="form-group">
           <label for="email" class="form-label">Email: <sup class="text-danger">*</sup></label>
-          <input type="text" name="email" id="email" value="<?=$data['email']?>"class="form-control">
+          <input type="text" name="email" id="email" value="<?=$data['email']?>"class="form-control <?= !empty($data['email_error']) ? 'is-invalid' : '' ?>">
+          <div class="invalid-feedback">
+            <?= $data['email_error'] ?>
+          </div>
         </div>
         <div class="form-group">
           <label for="password" class="form-label">Senha: <sup class="text-danger">*</sup></label>
-          <input type="password" name="password" id="password" value="<?=$data['password']?>"class="form-control">
+          <input type="password" name="password" id="password" value="<?=$data['password']?>"class="form-control <?= !empty($data['password_error']) ? 'is-invalid' : '' ?>">
+          <div class="invalid-feedback">
+            <?= $data['password_error'] ?>
+          </div>
         </div>
 
         <div class="row mt-3">
