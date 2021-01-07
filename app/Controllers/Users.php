@@ -52,7 +52,7 @@ class Users extends Controller {
 
           if($this->modelUser->register($data)) {
             Session::message('register', 'Cadastro realizado com sucesso');
-            header('Location: '.URL.'/users/login');
+            Url::redirect('users/login');
           }else {
             die("Erro ao armazenar usuário no banco de dados");
           }
@@ -100,7 +100,7 @@ class Users extends Controller {
 
           if($user) {
             $this->createSessionUser($user);
-            header('Location: '.URL.'');
+            Url::redirect('pages/home');
           }else {
             Session::message('login', 'E-mail ou senha inválidos', 'alert alert-danger');
           }
@@ -131,7 +131,7 @@ class Users extends Controller {
     
     session_destroy();
 
-    header('Location: '.URL.'/users/login');
+    Url::redirect('users/login');
   }
 }
 
