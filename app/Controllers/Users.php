@@ -51,8 +51,8 @@ class Users extends Controller {
           $data['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
 
           if($this->modelUser->register($data)) {
-            $data['success'] = true;
-            $data['success_message'] = 'Cadastro realizado com sucesso';
+            Session::message('register', 'Cadastro realizado com sucesso');
+            header('Location: '.URL.'/users/login');
           }else {
             die("Erro ao armazenar usuário no banco de dados");
           }
@@ -68,8 +68,6 @@ class Users extends Controller {
         'email_error' => '',
         'password_error' => '',
         'confirm_password_error' => '',
-        'success' => false,
-        'success_message' => '',
       ];
     }
 
@@ -102,10 +100,9 @@ class Users extends Controller {
 
           if($user) {
             $this->createSessionUser($user);
-            header('Location: '.URL);
+            header('Location: '.URL.'');
           }else {
-            $data['fail'] = true;
-            $data['fail_message'] = 'E-mail ou senha inválidos<br>';
+            Session::message('login', 'E-mail ou senha inválidos', 'alert alert-danger');
           }
         }
       }
@@ -115,8 +112,6 @@ class Users extends Controller {
         'password' => '',
         'email_error' => '',
         'password_error' => '',
-        'fail' => false,
-        'fail_message' => '',
       ];
     }
 

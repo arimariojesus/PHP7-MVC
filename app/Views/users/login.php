@@ -6,9 +6,8 @@
     <div class="card-body">
       <p class="card-text"><small class="text-muted">Informe seus dados para fazer login</small></p>
 
-      <div class="<?= empty($data['fail']) ? 'd-none' : 'alert alert-danger' ?>">
-        <?=!empty($data['fail_message']) ? $data['fail_message'] : ''?>
-      </div>
+      <?=Session::message('login')?>
+      <?=Session::message('register')?>
 
       <form action="<?= URL ?>/users/login" name="login" method="POST" class="mt-4">
         <div class="form-group">
