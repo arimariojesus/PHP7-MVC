@@ -100,7 +100,6 @@ class Users extends Controller {
 
           if($user) {
             $this->createSessionUser($user);
-            Url::redirect('pages/home');
           }else {
             Session::message('login', 'E-mail ou senha inválidos', 'alert alert-danger');
           }
@@ -122,6 +121,8 @@ class Users extends Controller {
     $_SESSION['user_id'] = $user->id;
     $_SESSION['user_name'] = $user->name;
     $_SESSION['user_email'] = $user->email;
+
+    URL::redirect('posts');
   }
 
   public function exit() {
