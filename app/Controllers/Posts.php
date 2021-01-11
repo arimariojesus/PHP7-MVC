@@ -7,6 +7,8 @@ class Posts extends Controller {
     if(!Session::isLoggedIn()) {
       URL::redirect('users/login');
     }
+
+    $this->modelPost = $this->model('Post');
   }
   
   public function index() {
@@ -21,6 +23,7 @@ class Posts extends Controller {
       $data = [
         'title' => trim($form['title']),
         'text' => trim($form['text']),
+        'user_id' => $_SESSION['user_id'],
       ];
 
       if(in_array('', $form)) {
@@ -32,18 +35,24 @@ class Posts extends Controller {
           $data['text_error'] = 'Texto é obrigatório';
         }
       }else {
-        echo "Pode cadastrar o post";
+        if($this->modelPost->upload($data)) {
+          Session::message('post', 'Post cadastrado com sucesso');
+          Url::redirect('posts');
+        }else {
+          die("Erro ao armazenar post no banco de dados");
+        }
+        
+        var_dump($form);
       }
     }else {
       $data = [
+        // 'image' => '',
         'title' => '',
         'text' => '',
         'title_error' => '',
         'text_error' => '',
       ];
     }
-
-    var_dump($form);
 
     $this->view('posts/register', $data);
   }

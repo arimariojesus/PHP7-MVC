@@ -3,6 +3,10 @@
 class Pages extends Controller{
   
   public function index() {
+    if(Session::isLoggedIn()) {
+      URL::redirect('posts');
+    }
+
     $data = [
       'titlePage' => 'Home Page'
     ];

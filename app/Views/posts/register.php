@@ -9,11 +9,15 @@
 
   <div class="card">
     <div class="card-header bg-secondary text-white">
-      Escrever post
+      <h3>Escrever post</h3>
     </div>
-    <div class="card-body">
+    <div class="card-body bg-light">
       
       <form action="<?= URL ?>/posts/register" name="login" method="POST" class="mt-4">
+        <!-- <div class="mb-3">
+          <label for="formFile" class="form-label">Imagem de visualização</label>
+          <input class="form-control" type="file" id="formFile">
+        </div> -->
 
         <div class="form-group">
           <label for="title" class="form-label">Título: <sup class="text-danger">*</sup></label>
@@ -25,7 +29,7 @@
 
         <div class="form-group">
           <label for="text" class="form-label">Texto: <sup class="text-danger">*</sup></label>
-          <textarea name="text" id="text" class="form-control <?= !empty($data['text_error']) ? 'is-invalid' : '' ?>"><?=$data['text']?></textarea>
+          <textarea name="text" id="text" class="form-control <?= !empty($data['text_error']) ? 'is-invalid' : '' ?>" rows="5"><?=$data['text']?></textarea>
           <div class="invalid-feedback">
             <?= $data['text_error'] ?>
           </div>
