@@ -12,7 +12,11 @@ class Posts extends Controller {
   }
   
   public function index() {
-    $this->view('posts/index');
+    $data = [
+      'posts' => $this->modelPost->readPosts(),
+    ];
+
+    $this->view('posts/index', $data);
   }
 
   public function register() {
