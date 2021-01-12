@@ -13,13 +13,13 @@
     </div>
     <div class="card-body bg-light">
       
-      <form action="<?= URL ?>/posts/register" name="login" method="POST" class="mt-4">
-        <!-- <div class="mb-3">
-          <label for="formFile" class="form-label">Imagem de visualização</label>
-          <input class="form-control" type="file" id="formFile">
-        </div> -->
+      <form action="<?= URL ?>/posts/register" name="login" method="POST" class="mt-4" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+          <label for="thumbnail" class="form-label">Imagem de visualização</label>
+          <input class="form-control" type="file" id="thumbnail" name="thumbnail">
+        </div>
 
-        <div class="form-group">
+        <div class="form-group mb-3">
           <label for="title" class="form-label">Título: <sup class="text-danger">*</sup></label>
           <input type="text" name="title" id="title" value="<?=$data['title']?>"class="form-control <?= !empty($data['title_error']) ? 'is-invalid' : '' ?>">
           <div class="invalid-feedback">
@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-3">
           <label for="text" class="form-label">Texto: <sup class="text-danger">*</sup></label>
           <textarea name="text" id="text" class="form-control <?= !empty($data['text_error']) ? 'is-invalid' : '' ?>" rows="5"><?=$data['text']?></textarea>
           <div class="invalid-feedback">
@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <div class="d-grid mt-3">
+        <div class="d-grid">
           <input type="submit" value="Postar" class="btn btn-primary btn-block">
         </div>
       </form>

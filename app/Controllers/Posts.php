@@ -30,6 +30,22 @@ class Posts extends Controller {
         'user_id' => $_SESSION['user_id'],
       ];
 
+      if(isset($_FILES['thumbnail'])) {
+        $thumbnail = $_FILES['thumbnail'];
+        $maxSizeInMB = 5;
+
+        if(Image::checkFile($thumbnail, $maxSizeInMB) != '') {
+          $data['thumbnail_error'] = Image::checkFile($thumbnail, $maxSizeInMB);
+        }else {
+          $data['thumbnail'] = [
+            'name' => $thumbnail['name'],
+            'content' => file_get_contents($thumbnail['tmp_name']),
+            'type' => $thumbnail['type'],
+            'size' => $thumbnail['size'],
+          ];
+        }
+      }
+
       if(in_array('', $form)) {
         if(empty($form['title'])) {
           $data['title_error'] = 'Título é obrigatório';
@@ -45,16 +61,15 @@ class Posts extends Controller {
         }else {
           die("Erro ao armazenar post no banco de dados");
         }
-        
-        var_dump($form);
       }
     }else {
       $data = [
-        // 'image' => '',
+        'thumbnail' => [],
         'title' => '',
         'text' => '',
         'title_error' => '',
         'text_error' => '',
+        'thumbnail_error' => '',
       ];
     }
 
