@@ -10,10 +10,15 @@
       </div>
     </div>
     <div class="card-body">
+      <?php
+        require_once(APP.'/Views/posts/showImage.php');
+        $showImage = new ShowImage();
+      ?>
       <?php foreach ($data['posts'] as $post) : ?>
+      <?php $image = $showImage->show($post->postID) ?>
 
         <div class="card mb-3">
-          <!-- <img src="..." class="card-img-top" alt="..."> -->
+          <img src="data:<?=$image['type']?>;base64,<?=base64_encode($image['content'])?>" class="card-img-top" />
           <div class="card-body">
             <h5 class="card-title"><?= $post->title ?></h5>
             <p class="card-text"><?= $post->text ?></p>
