@@ -20,7 +20,7 @@
             <a href="#" class="btn btn-primary">Ler mais...</a>
           </div>
           <div class="card-footer text-muted">
-            Escrito por: <strong><?= $post->name ?></strong> em <?= date('d', strtotime($post->postDateCreated)) ." de ". date('F', strtotime($post->postDateCreated)) ." de ". date('Y', strtotime($post->postDateCreated)) ?>
+            Escrito por: <strong><?= $post->name ?></strong> em <?= Date::formatDate($post->postDateCreated) ?>
           </div>
         </div>
 
