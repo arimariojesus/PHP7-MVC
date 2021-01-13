@@ -1,5 +1,7 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 class Image {
 
   public static function checkFile($data, $maxSizeInMB) {
@@ -8,7 +10,7 @@ class Image {
     $size = $data['size'];
 
     if(!preg_match('/^image\/(pjpeg|jpeg|png|gif|bmp)$/', $type)) {
-      return 'Tipo da imagem inválida';
+      return 'Tipo de imagem inválida';
     }
 
     if($size > $maxSize) {

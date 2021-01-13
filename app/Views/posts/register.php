@@ -16,7 +16,10 @@
       <form action="<?= URL ?>/posts/register" name="login" method="POST" class="mt-4" enctype="multipart/form-data">
         <div class="form-group mb-3">
           <label for="thumbnail" class="form-label">Imagem de visualização</label>
-          <input class="form-control" type="file" id="thumbnail" name="thumbnail">
+          <input class="form-control <?= !empty($data['thumbnail_error']) ? 'is-invalid' : '' ?>" type="file" id="thumbnail" name="thumbnail">
+          <div class="invalid-feedback">
+            <?= $data['thumbnail_error'] ?>
+          </div>
         </div>
 
         <div class="form-group mb-3">

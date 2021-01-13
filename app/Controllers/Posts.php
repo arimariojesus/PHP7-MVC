@@ -30,22 +30,6 @@ class Posts extends Controller {
         'user_id' => $_SESSION['user_id'],
       ];
 
-      if(isset($_FILES['thumbnail'])) {
-        $thumbnail = $_FILES['thumbnail'];
-        $maxSizeInMB = 5;
-
-        if(Image::checkFile($thumbnail, $maxSizeInMB) != '') {
-          $data['thumbnail_error'] = Image::checkFile($thumbnail, $maxSizeInMB);
-        }else {
-          $data['thumbnail'] = [
-            'name' => $thumbnail['name'],
-            'content' => file_get_contents($thumbnail['tmp_name']),
-            'type' => $thumbnail['type'],
-            'size' => $thumbnail['size'],
-          ];
-        }
-      }
-
       if(in_array('', $form)) {
         if(empty($form['title'])) {
           $data['title_error'] = 'Título é obrigatório';
@@ -55,21 +39,38 @@ class Posts extends Controller {
           $data['text_error'] = 'Texto é obrigatório';
         }
       }else {
-        if($this->modelPost->upload($data)) {
-          Session::message('post', 'Post cadastrado com sucesso');
-          Url::redirect('posts');
+        if(isset($_FILES['thumbnail'])) {
+          $thumbnail = $_FILES['thumbnail'];
+          $maxSizeInMB = 5;
+  
+          if(Image::checkFile($thumbnail, $maxSizeInMB) != '') {
+            $data['thumbnail_error'] = Image::checkFile($thumbnail, $maxSizeInMB);
+          }else {
+            $data['thumbnail'] = file_get_contents($thumbnail['tmp_name']);
+            $data['thumbnail_type'] = $thumbnail['type'];
+
+            // $data['thumbnail_error'] = '';
+
+            if($this->modelPost->upload($data)) {
+              Session::message('post', 'Post cadastrado com sucesso');
+              Url::redirect('posts');
+            }else {
+              die("Erro ao armazenar post no banco de dados");
+            }
+          }
         }else {
-          die("Erro ao armazenar post no banco de dados");
+          $data['thumbnail_error'] = 'Escolha uma imagem para servir como thumbnail';
         }
       }
     }else {
       $data = [
-        'thumbnail' => [],
+        'thumbnail' => '',
+        'thumbnail_type' => '',
         'title' => '',
         'text' => '',
+        'thumbnail_error' => '',
         'title_error' => '',
         'text_error' => '',
-        'thumbnail_error' => '',
       ];
     }
 
