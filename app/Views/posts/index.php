@@ -17,7 +17,7 @@
           <div class="card-body">
             <h5 class="card-title"><?= $post->title ?></h5>
             <p class="card-text"><?= $post->text ?></p>
-            <a href="#" class="btn btn-outline-primary">Ler mais...</a>
+            <a href="<?= URL.'/posts/show/'.$post->postId?>" class="btn btn-outline-primary">Ler mais...</a>
           </div>
           <div class="card-footer text-muted">
             Escrito por: <strong><?= $post->name ?></strong> em <?= Date::formatDate($post->postDateCreated) ?>

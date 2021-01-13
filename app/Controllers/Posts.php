@@ -9,6 +9,7 @@ class Posts extends Controller {
     }
 
     $this->modelPost = $this->model('Post');
+    $this->modelUser = $this->model('User');
   }
   
   public function index() {
@@ -75,5 +76,17 @@ class Posts extends Controller {
     }
 
     $this->view('posts/register', $data);
+  }
+
+  public function show($id) {
+    $post = $this->modelPost->readSinglePost($id);
+    $user = $this->modelUser->readUserForId($post->user_id);
+
+    $data = [
+      'post' => $post,
+      'user' => $user,
+    ];
+
+    $this->view('posts/show', $data);
   }
 }

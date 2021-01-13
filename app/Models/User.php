@@ -51,6 +51,13 @@ class User {
       return false;
     }
   }
+
+  public function readUserForId($id) {
+    $this->db->query("SELECT name FROM users WHERE id = :id");
+    $this->db->bind(':id', $id);
+
+    return $this->db->result();
+  }
 }
 
 ?>

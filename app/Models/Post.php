@@ -10,11 +10,11 @@ class Post {
 
   public function readPosts() {
     $this->db->query("SELECT *,
-      posts.id as postID,
+      posts.id as postId,
       posts.thumbnail as thumbnailContent,
       posts.thumbnail_type as thumbnailType,
       posts.created_in as postDateCreated,
-      users.id as userID,
+      users.id as userId,
       users.created_in as userDateRegister
       FROM posts
       INNER JOIN users ON
@@ -38,6 +38,13 @@ class Post {
     }else {
       return false;
     }
+  }
+
+  public function readSinglePost($id) {
+    $this->db->query("SELECT * FROM posts WHERE id = :id");
+    $this->db->bind(':id', $id);
+
+    return $this->db->result();
   }
 
 }
