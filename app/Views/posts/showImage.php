@@ -8,11 +8,13 @@ class ShowImage {
     $this->db = new Database();
   }
 
-  public function show($id) {
-    $id = (int) $id;
+  public function show($postId, $userId) {
+    $postId = (int) $postId;
+    $userId = (int) $userId;
 
-    $this->db->query("SELECT content, type FROM thumbnails WHERE post_id = :id");
-    $this->db->bind(':id', $id);
+    $this->db->query("SELECT content, type FROM thumbnails WHERE post_id = :postId && user_id = :userId");
+    $this->db->bind(':postId', $postId);
+    $this->db->bind(':userId', $userId);
 
     if($this->db->exec()) {
       $thumbnail = $this->db->result();

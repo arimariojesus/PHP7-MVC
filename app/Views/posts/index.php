@@ -15,7 +15,7 @@
         $showImage = new ShowImage();
       ?>
       <?php foreach ($data['posts'] as $post) : ?>
-      <?php $image = $showImage->show($post->postID) ?>
+      <?php $image = $showImage->show($post->postID, $post->userID) ?>
 
         <div class="card mb-3">
           <img src="data:<?=$image['type']?>;base64,<?=base64_encode($image['content'])?>" class="card-img-top" />

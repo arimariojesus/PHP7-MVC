@@ -12,7 +12,7 @@ class Post {
     $this->db->query("SELECT *,
       posts.id as postID,
       posts.created_in as postDateCreated,
-      users.id as userId,
+      users.id as userID,
       users.created_in as userDateRegister
       FROM posts
       INNER JOIN users ON
