@@ -50,8 +50,6 @@ class Posts extends Controller {
             $data['thumbnail'] = file_get_contents($thumbnail['tmp_name']);
             $data['thumbnail_type'] = $thumbnail['type'];
 
-            // $data['thumbnail_error'] = '';
-
             if($this->modelPost->upload($data)) {
               Session::message('post', 'Post cadastrado com sucesso');
               Url::redirect('posts');
@@ -76,6 +74,67 @@ class Posts extends Controller {
     }
 
     $this->view('posts/register', $data);
+  }
+
+  public function edit($id) {
+
+    $form = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $post = $this->modelPost->readSinglePost($id);
+
+    if(isset($form)) {
+      $data = [
+        'id' => trim($id),
+        'title' => trim($form['title']),
+        'text' => trim($form['text']),
+      ];
+
+      if(in_array('', $form)) {
+        if(empty($form['title'])) {
+          $data['title_error'] = 'Título é obrigatório';
+        }
+  
+        if(empty($form['text'])) {
+          $data['text_error'] = 'Texto é obrigatório';
+        }
+      }else {
+        if($_FILES['thumbnail']['tmp_name'] != '') {
+          $thumbnail = $_FILES['thumbnail'];
+          $maxSizeInMB = 5;
+  
+          if(Image::checkFile($thumbnail, $maxSizeInMB) != '') {
+            $data['thumbnail_error'] = Image::checkFile($thumbnail, $maxSizeInMB);
+          }else {
+            $data['thumbnail'] = file_get_contents($thumbnail['tmp_name']);
+            $data['thumbnail_type'] = $thumbnail['type'];
+          }
+        }else {
+          $data['thumbnail'] = '';
+          $data['thumbnail_type'] = '';
+        }
+        
+        if($this->modelPost->update($data)) {
+          Session::message('post', 'Post atualizado com sucesso');
+          Url::redirect('posts');
+        }else {
+          die("Erro ao atualizar post");
+        }
+      }
+    }else {
+      $data = [
+        'thumbnail' => $post->thumbnail,
+        'thumbnail_type' => '',
+        'id' => $post->id,
+        'title' => $post->title,
+        'text' => $post->text,
+        'thumbnail_error' => '',
+        'title_error' => '',
+        'text_error' => '',
+      ];
+    }
+
+    var_dump($form);
+
+    $this->view('posts/edit', $data);
   }
 
   public function show($id) {

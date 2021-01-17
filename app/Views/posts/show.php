@@ -12,7 +12,11 @@
     <div class="card-body">
       <h5 class="card-title"><?=$data['post']->title?></h5>
       <p class="card-text"><?=$data['post']->text?></p>
-      <p class="card-text"><small class="text-muted">Escrito por: <strong><?=$data['user']->name?></strong> em <?= Date::formatDate($data['post']->created_in) ?></small></p>
+      <p class="card-footer"><small class="text-muted">Escrito por: <strong><?=$data['user']->name?></strong> em <?= Date::formatDate($data['post']->created_in) ?></small></p>
     </div>
+
+    <?php if($data['post']->user_id == $_SESSION['user_id']): ?>
+      <a href="<?= URL.'/posts/edit/'.$data['post']->id?>" class="btn btn-sm btn-secondary">Editar</a>
+    <?php endif; ?>
   </div>
 </div>

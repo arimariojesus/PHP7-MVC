@@ -40,6 +40,24 @@ class Post {
     }
   }
 
+  public function update($data) {
+    $this->db->query("UPDATE posts SET thumbnail = CASE WHEN :thumbnail != '' THEN :thumbnail ELSE thumbnail END,
+                                       thumbnail_type = CASE WHEN :thumbnail != '' THEN :thumbnail_type ELSE thumbnail_type END, 
+                                       title = :title, text = :text WHERE id = :id");
+
+    $this->db->bind(":id", $data['id']);
+    $this->db->bind(":thumbnail", $data['thumbnail']);
+    $this->db->bind(":thumbnail_type", $data['thumbnail_type']);
+    $this->db->bind(":title", $data['title']);
+    $this->db->bind(":text", $data['text']);
+
+    if($this->db->exec()) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+
   public function readSinglePost($id) {
     $this->db->query("SELECT * FROM posts WHERE id = :id");
     $this->db->bind(':id', $id);
