@@ -120,6 +120,12 @@ class Posts extends Controller {
         }
       }
     }else {
+
+      if($post->user_id != $_SESSION['user_id']) {
+        Session::message('post', 'Você não tem autorização para editar esse post', 'alert alert-danger');
+        Url::redirect('posts');
+      }
+
       $data = [
         'thumbnail' => $post->thumbnail,
         'thumbnail_type' => '',
@@ -131,8 +137,6 @@ class Posts extends Controller {
         'text_error' => '',
       ];
     }
-
-    var_dump($form);
 
     $this->view('posts/edit', $data);
   }
