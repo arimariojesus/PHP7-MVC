@@ -152,4 +152,18 @@ class Posts extends Controller {
 
     $this->view('posts/show', $data);
   }
+
+  public function delete($id) {
+    $id = (int) $id;
+
+    if(is_int($id)) {
+      if($this->modelPost->delete($id)) {
+        Session::message('post', 'Post deletado com sucesso!', 'alert alert-danger');
+        Url::redirect('posts');
+      }else {
+        die('Erro ao tentar deletar o post');
+      }
+    }
+  }
+
 }

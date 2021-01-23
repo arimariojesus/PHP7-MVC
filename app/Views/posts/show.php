@@ -12,11 +12,20 @@
     <div class="card-body">
       <h5 class="card-title"><?=$data['post']->title?></h5>
       <p class="card-text"><?=$data['post']->text?></p>
-      <p class="card-footer"><small class="text-muted">Escrito por: <strong><?=$data['user']->name?></strong> em <?= Date::formatDate($data['post']->created_in) ?></small></p>
+      <p class="card-footer text-center"><small class="text-muted">Escrito por: <strong><?=$data['user']->name?></strong> em <?= Date::formatDate($data['post']->created_in) ?></small></p>
     </div>
 
     <?php if($data['post']->user_id == $_SESSION['user_id']): ?>
-      <a href="<?= URL.'/posts/edit/'.$data['post']->id?>" class="btn btn-sm btn-secondary">Editar</a>
+      <ul class="list-inline text-center">
+        <li class="list-inline-item">
+          <a href="<?= URL.'/posts/edit/'.$data['post']->id?>" class="btn btn-sm btn-secondary">Editar</a>
+        </li>
+        <li class="list-inline-item">
+          <form action="<?= URL.'/posts/delete/'.$data['post']->id?>" method="POST">
+            <input type="submit" class="btn btn-sm btn-danger" value="Deletar">
+          </form>
+        </li>
+      </ul>
     <?php endif; ?>
   </div>
 </div>
