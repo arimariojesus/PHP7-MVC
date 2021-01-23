@@ -154,7 +154,13 @@ class Posts extends Controller {
   }
 
   public function delete($id) {
+    $post = $this->modelPost->readSinglePost($id);
     $id = (int) $id;
+
+    if($post->user_id != $_SESSION['user_id']) {
+      Session::message('post', 'Você não tem autorização para deletar esse post', 'alert alert-danger');
+      Url::redirect('posts');
+    }
 
     if(is_int($id)) {
       if($this->modelPost->delete($id)) {
