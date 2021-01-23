@@ -154,22 +154,32 @@ class Posts extends Controller {
   }
 
   public function delete($id) {
-    $post = $this->modelPost->readSinglePost($id);
-    $id = (int) $id;
+    if($this->checkOwner($id)) {
+      $id = filter_var($id, FILTER_VALIDATE_INT);
+      $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_STRING);
 
-    if($post->user_id != $_SESSION['user_id']) {
-      Session::message('post', 'Você não tem autorização para deletar esse post', 'alert alert-danger');
+      if($id && $method === 'POST') {
+        if($this->modelPost->delete($id)) {
+          Session::message('post', 'Post deletado com sucesso');
+          Url::redirect('posts');
+        }
+      }else {
+        Session::message('post', 'Erro ao deletar o post', 'alert alert-danger');
+        Url::redirect('posts');
+      }
+    }else {
+      Session::message('post', 'Você não tem autorização para editar esse post', 'alert alert-danger');
       Url::redirect('posts');
     }
+  }
 
-    if(is_int($id)) {
-      if($this->modelPost->delete($id)) {
-        Session::message('post', 'Post deletado com sucesso!', 'alert alert-danger');
-        Url::redirect('posts');
-      }else {
-        die('Erro ao tentar deletar o post');
-      }
-    }
+  private function checkOwner($id) {
+    $post = $this->modelPost->readSinglePost($id);
+
+    if($post->user_id != $_SESSION['user_id'])
+      return false;
+
+    return true;
   }
 
 }
