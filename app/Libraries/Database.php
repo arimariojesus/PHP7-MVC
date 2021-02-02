@@ -1,11 +1,11 @@
 <?php
 
 class Database {
-  private $host = 'localhost';
-  private $user = 'root';
-  private $password = '';
-  private $db = 'framework';
-  private $port = '';
+  private $host = DB['HOST'];
+  private $user = DB['USER'];
+  private $password = DB['PASSWORD'];
+  private $db = DB['BASE'];
+  private $port = DB['PORT'];
   private $dbh;
   private $stmt;
 

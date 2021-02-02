@@ -3,6 +3,14 @@
  * Configuration file
 */
 
+define('DB', [
+  'HOST' => 'localhost',
+  'USER' => 'root',
+  'PASSWORD' => '',
+  'BASE' => 'framework',
+  'PORT' => '3306'
+]);
+
 // __FILE__ - Magic constant. Returns of complete path and name of file.
 
 //dirname - returns the path by removing the current directory/file
