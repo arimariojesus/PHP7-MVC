@@ -3,6 +3,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 session_start();
 
+include("./../app/phperror.php");
 include("./../app/config.php");
 include("./../app/autoload.php");
 
